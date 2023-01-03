@@ -1,6 +1,8 @@
 spring:
+  session:
+    store-type: none
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://localhost:5432/soda_inventory
     username: postgres
     password: postgres
   jpa:

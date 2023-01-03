@@ -2,28 +2,34 @@ package com.medium.debeziumexample.soda.entity
 
 import com.medium.debeziumexample.soda.domain.SodaOperation
 import com.medium.debeziumexample.soda.enum.OperationEnum
+import org.springframework.data.annotation.CreatedDate
 import java.math.BigDecimal
-import java.util.UUID
+import java.time.Instant
+import java.util.*
 import javax.persistence.Entity
+import javax.persistence.EnumType
+import javax.persistence.Enumerated
 import javax.persistence.Id
-import javax.persistence.ManyToOne
 
 @Entity
 data class SodaOperationEntity(
     @Id val id: UUID,
-    @ManyToOne val soda: SodaEntity,
     val quantity: Long,
     val price: BigDecimal,
-    val operation: OperationEnum,
-) {
+    @Enumerated(value=EnumType.STRING) val operation: OperationEnum,
+    val sodaId: UUID,
+    @CreatedDate val createdAt: Instant = Instant.now(),
+    val payload: String,
+    ) {
     companion object {
         fun fromDomain(sodaOperation: SodaOperation): SodaOperationEntity = sodaOperation.run{
             SodaOperationEntity(
                 id = id,
-                soda = SodaEntity.fromDomain(soda),
+                sodaId = sodaId,
                 quantity = quantity,
                 price = price,
-                operation = operation
+                operation = operation,
+                payload = "{\"id\":38}",
             )
         }
     }

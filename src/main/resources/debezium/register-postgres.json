@@ -2,15 +2,28 @@
   "name": "inventory-connector",
   "config": {
     "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
-    "tasks.max": "1",
     "database.hostname": "postgres",
     "database.port": "5432",
     "database.user": "postgres",
     "database.password": "postgres",
-    "database.dbname" : "postgres",
-    "database.server.name": "dbserver1",
-    "database.whitelist": "inventory",
+    "database.server.name": "soda_inventory",
+    "database.dbname" : "soda_inventory",
     "database.history.kafka.bootstrap.servers": "kafka:9092",
-    "database.history.kafka.topic": "schema-changes.inventory"
+    "schema.include.list": "public",
+    "table.include.list": "soda_operation_entity",
+    "plugin.name": "pgoutput",
+    "transforms": "outbox",
+    "transforms.outbox.type": "io.debezium.transforms.outbox.EventRouter",
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "key.converter.schemas.enabled": false,
+    "value.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter.schemas.enabled": false,
+    "table.field.event.key": "soda_id",
+    "table.field.event.type": "operation",
+    "table.field.event.timestamp": "created_at",
+    "table.field.event.payload.id": "soda_id",
+    "transforms.outbox.route.by.field": "operation",
+    "transforms.outbox.route.topic.replacement": "topico.${routedByValue}",
+    "slot.name": "soda_inventory"
   }
 }

@@ -6,7 +6,7 @@ import java.util.UUID
 
 data class SodaOperation(
     val id: UUID,
-    val soda: Soda,
+    val sodaId: UUID,
     val quantity: Long,
     val price: BigDecimal,
     val operation: OperationEnum,

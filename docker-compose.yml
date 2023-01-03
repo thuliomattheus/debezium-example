@@ -19,6 +19,7 @@ services:
     ports:
       - 5432:5432
     environment:
+      - POSTGRES_DB=soda_inventory
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
   connect:
